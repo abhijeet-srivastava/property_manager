@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,7 @@ public class PropertyManagerService {
     private static final Long SLOT_DURATION_MINS = 30L;
     private static final Long SLOT_PRE_REGISTER_DAYS = 3L;
 
-    private Map<UUID, Property> propertyRepo;
+    private final Map<UUID, Property> propertyRepo;
 
     public PropertyManagerService() {
         this.propertyRepo = new HashMap<>();
@@ -65,7 +64,7 @@ public class PropertyManagerService {
         if(!this.propertyRepo.containsKey(propertyId)) {
             return false;
         }
-        Integer mins = bookRequest.getStartTime().getMinute();
+        int mins = bookRequest.getStartTime().getMinute();
         if(!(mins == 0 || mins == 30)) {
             return false;
         }
@@ -126,7 +125,7 @@ public class PropertyManagerService {
         if(currTime.isBefore(SLOT_START_TIME)) {
             return currTimeStamp.toLocalDate().atTime(SLOT_START_TIME);
         } else if(currTime.plusMinutes(SLOT_DURATION_MINS).isAfter(SLOT_END_TIME)) {
-            LocalDate nextDate = currTimeStamp.toLocalDate().plusDays(1l);
+            LocalDate nextDate = currTimeStamp.toLocalDate().plusDays(1);
             return nextDate.atTime(SLOT_START_TIME);
         }
         int minutes = currTimeStamp.getMinute();

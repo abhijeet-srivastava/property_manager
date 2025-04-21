@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class PropertyController {
 
-    private PropertyManagerService service;
+    private final PropertyManagerService service;
 
     @Autowired
     public PropertyController(PropertyManagerService service) {
